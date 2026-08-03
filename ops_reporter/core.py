@@ -45,7 +45,7 @@ def validate_data(frame: pd.DataFrame) -> pd.DataFrame:
     missing = REQUIRED_COLUMNS - set(normalized.columns)
     if missing:
         raise ValueError(f"Missing required columns: {', '.join(sorted(missing))}")
-    normalized = normalized[list(sorted(REQUIRED_COLUMNS))]
+    normalized = normalized[sorted(REQUIRED_COLUMNS)]
     normalized["date"] = pd.to_datetime(normalized["date"], errors="raise")
     for column in ["units_produced", "defects", "downtime_minutes", "target_units"]:
         normalized[column] = pd.to_numeric(normalized[column], errors="raise")
