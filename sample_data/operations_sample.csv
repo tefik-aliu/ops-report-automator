@@ -1,0 +1,13 @@
+date,department,operator,units_produced,defects,downtime_minutes,target_units
+2026-07-01,Cutting,Alex,1280,14,32,1250
+2026-07-01,Assembly,Maria,940,8,18,1000
+2026-07-01,Quality,Samir,610,3,12,600
+2026-07-02,Cutting,Alex,1190,9,44,1250
+2026-07-02,Assembly,Maria,1035,11,20,1000
+2026-07-02,Quality,Samir,590,2,8,600
+2026-07-03,Cutting,Nora,1310,12,25,1250
+2026-07-03,Assembly,David,980,7,16,1000
+2026-07-03,Quality,Samir,625,5,15,600
+2026-07-04,Cutting,Nora,1265,7,19,1250
+2026-07-04,Assembly,David,1015,9,14,1000
+2026-07-04,Quality,Leila,605,2,7,600
