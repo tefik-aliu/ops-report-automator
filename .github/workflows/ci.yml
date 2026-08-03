@@ -1,0 +1,25 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check ops_reporter tests
+      - run: pytest
+      - run: python -m ops_reporter.cli sample_data/operations_sample.csv --output-dir output
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generated-reports
+          path: output/
