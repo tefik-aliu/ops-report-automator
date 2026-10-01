@@ -35,3 +35,32 @@ def test_negative_values_are_rejected():
     frame.loc[0, "defects"] = -1
     with pytest.raises(ValueError, match="cannot contain negative"):
         validate_data(frame)
+
+
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), -float("inf"), 1.5])
+@pytest.mark.parametrize("column", ["units_produced", "defects", "downtime_minutes", "target_units"])
+def test_invalid_numeric_values_cannot_silently_change_totals(column, value):
+    frame = sample_frame().astype({column: float})
+    frame.loc[0, column] = value
+    with pytest.raises(ValueError, match="finite|whole"):
+        validate_data(frame)
+
+
+@pytest.mark.parametrize("column,value", [("date", None), ("department", "  "), ("operator", None)])
+def test_missing_group_keys_are_rejected(column, value):
+    frame = sample_frame()
+    frame.loc[0, column] = value
+    with pytest.raises(ValueError, match="missing|blank"):
+        validate_data(frame)
+
+
+def test_empty_data_is_rejected():
+    with pytest.raises(ValueError, match="at least one"):
+        validate_data(sample_frame().iloc[:0])
+
+
+def test_duplicate_normalized_headers_are_rejected():
+    frame = sample_frame()
+    frame[" Department "] = "Other"
+    with pytest.raises(ValueError, match="Duplicate"):
+        validate_data(frame)

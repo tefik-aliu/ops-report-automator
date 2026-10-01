@@ -45,3 +45,18 @@ ruff check ops_reporter tests
 ## Author
 
 **Tefik Aliu** — https://github.com/tefik-aliu
+
+## Inspect the implementation
+
+- [Validation and aggregation](ops_reporter/core.py)
+- [Workbook and HTML generation](ops_reporter/report.py)
+- [Invalid input regressions](tests/test_core.py)
+- [Workbook checks](tests/test_report.py)
+
+## Input quality before aggregation
+
+Validation rejects empty input, duplicate normalized headers, missing grouping labels or dates, and non-finite or fractional numeric values. Numeric columns use whole units and whole minutes; fractional measurements must be converted explicitly before import.
+
+## Operational boundaries
+
+This is a batch reporting tool, not a live data service. It assumes one consistent input schema and does not deduplicate source records automatically.
